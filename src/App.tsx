@@ -1,5 +1,24 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './screens/Home';
+import NotFound from './screens/404';
+import Cat from './screens/Cat';
+
 function App() {
-  return <div>Hello World!</div>;
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/cat/:id" element={<Cat />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
 }
 
-export default App;
+function WithRouter() {
+  return (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
+}
+
+export default WithRouter;
