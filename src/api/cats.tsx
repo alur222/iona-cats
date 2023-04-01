@@ -14,4 +14,19 @@ export const getAllBreeds = async () => {
   return data;
 };
 
-export const getBreed = async () => {};
+interface Params {
+  page: number
+  limit: number
+  breed_id: string
+}
+
+export const searchCats = async (params: Params) => {
+  const { data } = await axios.request({
+    url: `${baseUrl}/images/search`,
+    params,
+    headers: {
+      'x-api-key': key,
+    },
+  });
+  return data;
+};
