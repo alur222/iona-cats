@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { BreedsProvider } from './context/Breeds';
+import { CatsProvider } from './context/Cats';
 import Layout from './components/Layout';
 import Home from './screens/Home';
 import NotFound from './screens/404';
@@ -21,9 +22,11 @@ function AppRoutes() {
 function App() {
   return (
     <BreedsProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <CatsProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </CatsProvider>
     </BreedsProvider>
   );
 }
