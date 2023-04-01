@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useContext } from 'react';
@@ -20,12 +21,12 @@ interface Cat {
 // }
 
 function CatsList() {
-  const { cats } = useContext(CatsContext);
-  // const handleSelection = (event) => {
-  //   const { value } = event.target;
-  //   setSelectedBreed(value);
-  //   return false;
-  // };
+  const { cats, hasMore, loadMore } = useContext(CatsContext);
+
+  const handleLoadMore = () => {
+    loadMore();
+    return false;
+  };
 
   if (!cats.length) {
     return (
@@ -38,11 +39,22 @@ function CatsList() {
   }
 
   return (
-    <Row className="cats-list">
-      {cats.map(({ url, id }: Cat) => (
-        <CatCard url={url} key={id} />
-      ))}
-    </Row>
+    <>
+      <Row className="cats-list">
+        {cats.map(({ url, id }: Cat) => (
+          <CatCard url={url} key={id} />
+        ))}
+      </Row>
+      <Row>
+        <Col xs={12} md={12} style={{ paddingTop: '20px' }}>
+          {hasMore && (
+            <Button variant="success" onClick={handleLoadMore}>
+              Load More
+            </Button>
+          )}
+        </Col>
+      </Row>
+    </>
   );
 }
 
