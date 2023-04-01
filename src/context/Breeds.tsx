@@ -1,5 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
-import { getAllBreeds } from '../api/cats';
+import { createContext, useState, useMemo } from 'react';
 
 const Context = createContext([]);
 
@@ -7,16 +6,26 @@ interface Props {
   children: React.ReactNode;
 }
 
-function BreedsProvider({ children }: Props) {
+export function BreedsProvider({ children }: Props) {
   const [breeds, setBreeds] = useState([]);
+  const [selectedBreed, setSelectedBreed] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(null);
 
-  useEffect(() => {
-    getAllBreeds()
-      .then((data) => setBreeds(data))
-      .catch((ex) => console.log(ex));
-  }, [setBreeds]);
+  const memoizedValue = useMemo(() => {
+    return {
+      breeds,
+      setBreeds,
+      selectedBreed,
+      setSelectedBreed,
+      error,
+      setError,
+      loading,
+      setLoading,
+    };
+  }, [breeds, selectedBreed, error, loading]);
 
-  return <Context.Provider value={breeds}>{children}</Context.Provider>;
+  return <Context.Provider value={memoizedValue}>{children}</Context.Provider>;
 }
 
-export default BreedsProvider;
+export default Context;
