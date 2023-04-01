@@ -31,6 +31,9 @@ export function CatsProvider({ children }: Props) {
           setError('error');
           setLoading(false);
         });
+    } else {
+      // we just reset cats to empty
+      setCats([]);
     }
   }, [selectedBreed]);
 
