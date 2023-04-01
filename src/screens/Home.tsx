@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef } from 'react';
+import BreedsForm from '../components/BreedsForm';
 import BreedsContext from '../context/Breeds';
 import { getAllBreeds } from '../api/cats';
 
@@ -17,7 +18,7 @@ function Home() {
     }
   }, [isCalled, setBreeds]);
 
-  return <h1>IONA CATS</h1>;
+  return <BreedsForm />;
 }
 
 export default Home;
