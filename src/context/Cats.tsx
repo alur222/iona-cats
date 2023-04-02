@@ -17,7 +17,7 @@ interface Props {
 }
 
 export function CatsProvider({ children }: Props) {
-  const { selectedBreed } = useContext(BreedsContext);
+  const { selectedBreed, setSelectedBreed } = useContext(BreedsContext);
 
   const [cats, setCats] = useState([]);
   const [cat, setCat] = useState(null);
@@ -62,6 +62,12 @@ export function CatsProvider({ children }: Props) {
       })
         .then((data) => {
           setCat(data);
+
+          // just in case user refreshes the cat view screen
+          if (!selectedBreed) {
+            setSelectedBreed(data.breeds[0].id);
+          }
+
           setLoading(false);
         })
         .catch(() => {
