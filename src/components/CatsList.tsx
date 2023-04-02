@@ -42,7 +42,7 @@ function CatsList() {
     <>
       <Row className="cats-list">
         {cats.map(({ url, id }: Cat) => (
-          <CatCard url={url} key={id} />
+          <CatCard url={url} id={id} key={id} />
         ))}
       </Row>
       <Row>
