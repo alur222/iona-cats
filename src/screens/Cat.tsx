@@ -1,10 +1,9 @@
 import { Link, useParams } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import CatCard from '../components/CatCard';
 import CatsContext from '../context/Cats';
-import { filterCatsById } from '../utils/filterCatById';
 
 function Cat() {
   const { catId } = useParams();

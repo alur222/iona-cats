@@ -22,7 +22,7 @@ export function CatsProvider({ children }: Props) {
   const [cats, setCats] = useState([]);
   const [cat, setCat] = useState(null);
   const [catId, setCatId] = useState(null);
-  const [error, setError] = useState('');
+  const [catsError, setCatsError] = useState('');
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const page = useRef(0);
@@ -44,7 +44,7 @@ export function CatsProvider({ children }: Props) {
           setLoading(false);
         })
         .catch(() => {
-          setError('error');
+          setCatsError('error');
           setLoading(false);
         });
     } else {
@@ -71,13 +71,13 @@ export function CatsProvider({ children }: Props) {
           setLoading(false);
         })
         .catch(() => {
-          setError('error');
+          setCatsError('error');
           setLoading(false);
         });
     } else {
       setCat(null);
     }
-  }, [catId]);
+  }, [catId, setSelectedBreed, selectedBreed]);
 
   const loadMore = useCallback(() => {
     page.current += 1;
@@ -100,22 +100,32 @@ export function CatsProvider({ children }: Props) {
         setLoading(false);
       })
       .catch(() => {
-        setError('error');
+        setCatsError('error');
         setLoading(false);
       });
   }, [selectedBreed, cats]);
 
   const memoizedValue = useMemo(() => {
     return {
-      error,
+      catsError,
       loading,
       cats,
       cat,
       setCatId,
+      setCatsError,
       hasMore,
       loadMore,
     };
-  }, [error, loading, cats, cat, hasMore, loadMore]);
+  }, [
+    catsError,
+    setCatId,
+    setCatsError,
+    loading,
+    cats,
+    cat,
+    hasMore,
+    loadMore,
+  ]);
 
   return <Context.Provider value={memoizedValue}>{children}</Context.Provider>;
 }

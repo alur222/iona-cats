@@ -9,7 +9,7 @@ interface Props {
 export function BreedsProvider({ children }: Props) {
   const [breeds, setBreeds] = useState([]);
   const [selectedBreed, setSelectedBreed] = useState(null);
-  const [error, setError] = useState(null);
+  const [breedsError, setBreedsError] = useState(null);
   const [loading, setLoading] = useState(null);
 
   const memoizedValue = useMemo(() => {
@@ -18,12 +18,12 @@ export function BreedsProvider({ children }: Props) {
       setBreeds,
       selectedBreed,
       setSelectedBreed,
-      error,
-      setError,
+      breedsError,
+      setBreedsError,
       loading,
       setLoading,
     };
-  }, [breeds, selectedBreed, error, loading]);
+  }, [breeds, selectedBreed, breedsError, loading]);
 
   return <Context.Provider value={memoizedValue}>{children}</Context.Provider>;
 }

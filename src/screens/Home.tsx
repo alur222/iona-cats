@@ -5,19 +5,23 @@ import BreedsContext from '../context/Breeds';
 import { getAllBreeds } from '../api/cats';
 
 function Home() {
-  const { setBreeds } = useContext(BreedsContext);
+  const { setBreeds, setBreedsError } = useContext(BreedsContext);
 
   const isCalled = useRef(false);
 
   useEffect(() => {
     if (!isCalled.current) {
-      getAllBreeds().then((data) => {
-        isCalled.current = true;
-        setBreeds(data);
-      });
+      getAllBreeds()
+        .then((data) => {
+          isCalled.current = true;
+          setBreeds(data);
+        })
+        .catch((err) => {
+          setBreedsError(err);
+        });
       isCalled.current = true;
     }
-  }, [isCalled, setBreeds]);
+  }, [isCalled, setBreeds, setBreedsError]);
 
   return (
     <>
