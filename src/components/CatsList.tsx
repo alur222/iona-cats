@@ -3,6 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useContext } from 'react';
 import styled from 'styled-components';
+import Spinner from 'react-bootstrap/Spinner';
 import CatsContext from '../context/Cats';
 import CatCard from './CatCard';
 
@@ -21,12 +22,16 @@ const CardRow = styled(Row)`
 `;
 
 function CatsList() {
-  const { cats, hasMore, loadMore } = useContext(CatsContext);
+  const { cats, hasMore, loadMore, loading } = useContext(CatsContext);
 
   const handleLoadMore = () => {
     loadMore();
     return false;
   };
+
+  if (loading) {
+    return <Spinner animation="grow" variant="dark" />;
+  }
 
   if (!cats.length) {
     return (

@@ -2,18 +2,23 @@ import { Link, useParams } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useContext, useEffect } from 'react';
+import Spinner from 'react-bootstrap/Spinner';
 import CatCard from '../components/CatCard';
 import CatsContext from '../context/Cats';
 
 function Cat() {
   const { catId } = useParams();
-  const { cat, setCatId } = useContext(CatsContext);
+  const { cat, setCatId, loading } = useContext(CatsContext);
 
   useEffect(() => {
     if (catId) {
       setCatId(catId);
     }
   }, [catId, setCatId]);
+
+  if (loading) {
+    return <Spinner animation="grow" variant="dark" />;
+  }
 
   if (!cat) {
     return (
