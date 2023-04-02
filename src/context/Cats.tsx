@@ -23,12 +23,13 @@ export function CatsProvider({ children }: Props) {
   const [error, setError] = useState('');
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
-  const page = useRef(1);
+  const page = useRef(0);
   const limit = useRef(10);
 
   // we are reacting when user selected a breed.
   useEffect(() => {
     if (selectedBreed) {
+      page.current = 1;
       setLoading(true);
       searchCats({
         page: page.current,
