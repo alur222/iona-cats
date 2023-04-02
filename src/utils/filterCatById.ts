@@ -1,15 +1,18 @@
 /* eslint-disable import/prefer-default-export */
 
+type CatType = {
+  id?: string;
+  url?: string;
+};
+
+type CatsType = CatType[];
+
 type FilterCatsByIdParams = {
-  cats: object[];
+  cats: CatsType;
   filterId: string;
 };
 
-type Cat = {
-  id: string;
-};
-
 export const filterCatsById = ({ cats, filterId }: FilterCatsByIdParams) => {
-  const catsFiltered = cats.filter(({ id }: Cat) => id === filterId);
+  const catsFiltered = cats.filter(({ id }) => id === filterId);
   return (catsFiltered.length && catsFiltered[0]) || null;
 };

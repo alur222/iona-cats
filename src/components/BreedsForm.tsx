@@ -4,17 +4,11 @@ import Form from 'react-bootstrap/Form';
 import { useContext } from 'react';
 import BreedsContext from '../context/Breeds';
 
-interface Breed {
-  name: string;
-  id: string;
-}
-
 function BreedsForm() {
   const { breeds, selectedBreed, setSelectedBreed } = useContext(BreedsContext);
 
-  const handleSelection = (event) => {
-    const { value } = event.target;
-    setSelectedBreed(value);
+  const handleSelection = (event: React.ChangeEvent) => {
+    setSelectedBreed?.((event.target as HTMLInputElement).value);
     return false;
   };
 
@@ -31,7 +25,7 @@ function BreedsForm() {
             >
               <option value="">Please select a breed</option>
               {breeds &&
-                breeds.map(({ id, name }: Breed) => (
+                breeds.map(({ id, name }) => (
                   <option value={id} key={id}>
                     {name}
                   </option>

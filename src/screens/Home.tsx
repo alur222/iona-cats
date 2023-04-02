@@ -12,15 +12,15 @@ function Home() {
   const isCalled = useRef(false);
 
   useEffect(() => {
-    setCatId('');
+    setCatId?.('');
     if (!isCalled.current) {
       getAllBreeds()
         .then((data) => {
           isCalled.current = true;
-          setBreeds(data);
+          setBreeds?.(data);
         })
         .catch((err) => {
-          setBreedsError(err);
+          setBreedsError?.(err);
         });
       isCalled.current = true;
     }

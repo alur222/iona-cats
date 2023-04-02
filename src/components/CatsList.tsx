@@ -7,16 +7,6 @@ import Spinner from 'react-bootstrap/Spinner';
 import CatsContext from '../context/Cats';
 import CatCard from './CatCard';
 
-interface Breed {
-  name: string;
-  id: string;
-}
-
-interface Cat {
-  url: string;
-  id: string;
-}
-
 const CardRow = styled(Row)`
   row-gap: 15px;
 `;
@@ -25,7 +15,7 @@ function CatsList() {
   const { cats, hasMore, loadMore, loading } = useContext(CatsContext);
 
   const handleLoadMore = () => {
-    loadMore();
+    loadMore?.();
     return false;
   };
 
@@ -46,8 +36,8 @@ function CatsList() {
   return (
     <>
       <CardRow>
-        {cats.map(({ url, id }: Cat) => (
-          <CatCard url={url} id={id} key={id} />
+        {cats.map(({ url, id }) => (
+          <CatCard url={url || ''} id={id || ''} key={id} />
         ))}
       </CardRow>
       <CardRow>

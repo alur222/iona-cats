@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import styled from 'styled-components';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import BreedsContext from '../context/Breeds';
 import CatsContext from '../context/Cats';
 
@@ -31,8 +31,8 @@ export default function Layout({ children }: Props) {
       <ToastContainer position="top-end">
         <Toast
           onClose={() => {
-            setCatsError('');
-            setBreedsError('');
+            setCatsError?.('');
+            setBreedsError?.('');
           }}
           show={!!(catsError || breedsError)}
           delay={3000}

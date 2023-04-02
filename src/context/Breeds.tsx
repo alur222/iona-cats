@@ -1,16 +1,39 @@
 import { createContext, useState, useMemo } from 'react';
 
-const Context = createContext([]);
+type Breed = {
+  id?: string;
+  name?: string;
+};
+
+type Breeds = Breed[];
+
+type BreedsContextType = {
+  breeds: Breeds;
+  setBreeds?: React.Dispatch<React.SetStateAction<Breeds>>;
+  selectedBreed: string;
+  setSelectedBreed?: React.Dispatch<React.SetStateAction<string>>;
+  breedsError: string;
+  setBreedsError?: React.Dispatch<React.SetStateAction<string>>;
+  loading: boolean;
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Context = createContext<BreedsContextType>({
+  breeds: [],
+  selectedBreed: '',
+  breedsError: '',
+  loading: false,
+});
 
 interface Props {
   children: React.ReactNode;
 }
 
 export function BreedsProvider({ children }: Props) {
-  const [breeds, setBreeds] = useState([]);
-  const [selectedBreed, setSelectedBreed] = useState(null);
-  const [breedsError, setBreedsError] = useState(null);
-  const [loading, setLoading] = useState(null);
+  const [breeds, setBreeds] = useState<Breeds | []>([]);
+  const [selectedBreed, setSelectedBreed] = useState<string>('');
+  const [breedsError, setBreedsError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const memoizedValue = useMemo(() => {
     return {

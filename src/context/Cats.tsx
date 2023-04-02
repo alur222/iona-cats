@@ -10,21 +10,57 @@ import {
 import { searchCats, getCatById } from '../api/cats';
 import BreedsContext from './Breeds';
 
-const Context = createContext([]);
+type CatBreeds = {
+  name: string;
+  description: string;
+  temperament: string;
+  origin: string;
+};
+
+type CatType = {
+  id?: string;
+  url?: string;
+  breeds?: CatBreeds[];
+};
+type CatsType = CatType[];
+
+type CatsContextType = {
+  catsError: string;
+  loading: boolean;
+  cats: CatsType;
+  cat: CatType;
+  setCatId?: React.Dispatch<React.SetStateAction<string>>;
+  setCatsError?: React.Dispatch<React.SetStateAction<string>>;
+  hasMore: boolean;
+  loadMore?: () => void;
+};
+
+const Context = createContext<CatsContextType>({
+  catsError: '',
+  loading: false,
+  cats: [],
+  cat: {},
+  hasMore: false,
+  loadMore: () => {},
+});
 
 interface Props {
   children: React.ReactNode;
 }
 
+type Cat = {
+  id: string;
+};
+
 export function CatsProvider({ children }: Props) {
   const { selectedBreed, setSelectedBreed } = useContext(BreedsContext);
 
-  const [cats, setCats] = useState([]);
-  const [cat, setCat] = useState(null);
-  const [catId, setCatId] = useState(null);
-  const [catsError, setCatsError] = useState('');
-  const [hasMore, setHasMore] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [cats, setCats] = useState<CatsType | []>([]);
+  const [cat, setCat] = useState<CatType>({});
+  const [catId, setCatId] = useState<string>('');
+  const [catsError, setCatsError] = useState<string>('');
+  const [hasMore, setHasMore] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const page = useRef(0);
   const limit = useRef(10);
 
@@ -65,7 +101,7 @@ export function CatsProvider({ children }: Props) {
 
           // just in case user refreshes the cat view screen
           if (!selectedBreed) {
-            setSelectedBreed(data.breeds[0].id);
+            setSelectedBreed?.(data.breeds[0].id);
           }
 
           setLoading(false);
@@ -75,7 +111,7 @@ export function CatsProvider({ children }: Props) {
           setLoading(false);
         });
     } else {
-      setCat(null);
+      setCat({});
     }
   }, [catId, setSelectedBreed, selectedBreed]);
 
@@ -93,7 +129,9 @@ export function CatsProvider({ children }: Props) {
         // if new data is lesser than 10, we remove the load more button
         // from the UI
         const ids = cats.map(({ id }) => id);
-        const newData = data.filter(({ id }) => ids.indexOf(id) === -1);
+        const newData: [] = data.filter(
+          ({ id }: Cat): boolean => ids.indexOf(id) === -1
+        );
         const merged = [...cats, ...newData];
         setCats(merged);
         setHasMore(!!newData.length);

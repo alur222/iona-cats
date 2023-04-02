@@ -12,7 +12,7 @@ function Cat() {
 
   useEffect(() => {
     if (catId) {
-      setCatId(catId);
+      setCatId?.(catId);
     }
   }, [catId, setCatId]);
 
@@ -20,7 +20,7 @@ function Cat() {
     return <Spinner animation="grow" variant="dark" />;
   }
 
-  if (!cat) {
+  if (!cat || !cat.breeds) {
     return (
       <Row>
         <Col xs={12} md={12} style={{ paddingTop: '20px' }}>
@@ -42,8 +42,8 @@ function Cat() {
       <Row>
         <Col xs={12} md={8} style={{ paddingTop: '20px' }}>
           <CatCard
-            url={cat.url}
-            id={cat.id}
+            url={cat.url || ''}
+            id={cat.id || ''}
             smWidth={12}
             mdWidth={12}
             showCardBody={false}
