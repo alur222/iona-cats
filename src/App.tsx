@@ -12,7 +12,7 @@ function AppRoutes() {
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cat/:id" element={<Cat />} />
+        <Route path="/cat/:catId" element={<Cat />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>

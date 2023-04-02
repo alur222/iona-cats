@@ -15,15 +15,29 @@ export const getAllBreeds = async () => {
 };
 
 interface Params {
-  page: number
-  limit: number
-  breed_id: string
+  page: number;
+  limit: number;
+  breed_id: string;
 }
 
 export const searchCats = async (params: Params) => {
   const { data } = await axios.request({
     url: `${baseUrl}/images/search`,
     params,
+    headers: {
+      'x-api-key': key,
+    },
+  });
+  return data;
+};
+
+interface GetParams {
+  id: string;
+}
+
+export const getCatById = async ({ id }: GetParams) => {
+  const { data } = await axios.request({
+    url: `${baseUrl}/images/${id}`,
     headers: {
       'x-api-key': key,
     },

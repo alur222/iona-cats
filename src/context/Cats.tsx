@@ -7,7 +7,7 @@ import {
   useRef,
   useCallback,
 } from 'react';
-import { searchCats } from '../api/cats';
+import { searchCats, getCatById } from '../api/cats';
 import BreedsContext from './Breeds';
 
 const Context = createContext([]);
@@ -20,6 +20,8 @@ export function CatsProvider({ children }: Props) {
   const { selectedBreed } = useContext(BreedsContext);
 
   const [cats, setCats] = useState([]);
+  const [cat, setCat] = useState(null);
+  const [catId, setCatId] = useState(null);
   const [error, setError] = useState('');
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,6 +52,26 @@ export function CatsProvider({ children }: Props) {
       setCats([]);
     }
   }, [selectedBreed]);
+
+  // we are now reacting to url params changes
+  useEffect(() => {
+    if (catId) {
+      setLoading(true);
+      getCatById({
+        id: catId,
+      })
+        .then((data) => {
+          setCat(data);
+          setLoading(false);
+        })
+        .catch(() => {
+          setError('error');
+          setLoading(false);
+        });
+    } else {
+      setCat(null);
+    }
+  }, [catId]);
 
   const loadMore = useCallback(() => {
     page.current += 1;
@@ -82,10 +104,12 @@ export function CatsProvider({ children }: Props) {
       error,
       loading,
       cats,
+      cat,
+      setCatId,
       hasMore,
       loadMore,
     };
-  }, [error, loading, cats, hasMore, loadMore]);
+  }, [error, loading, cats, cat, hasMore, loadMore]);
 
   return <Context.Provider value={memoizedValue}>{children}</Context.Provider>;
 }

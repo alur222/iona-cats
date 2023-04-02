@@ -5,22 +5,33 @@ import { Link } from 'react-router-dom';
 interface Props {
   url: string;
   id: string;
+  mdWidth?: number;
+  smWidth?: number;
+  showCardBody?: boolean;
 }
 
-function CatCard({ url, id }: Props) {
+function CatCard({ url, id, mdWidth, smWidth, showCardBody }: Props) {
   const href = `/cat/${id}`;
   return (
-    <Col md={3} sm={6} className="cat-card">
+    <Col md={mdWidth} sm={smWidth} className="cat-card">
       <Card>
         <Card.Img variant="top" src={url} />
-        <Card.Body>
-          <Link to={href} className="btn btn-primary">
-            View details
-          </Link>
-        </Card.Body>
+        {showCardBody && (
+          <Card.Body>
+            <Link to={href} className="btn btn-primary">
+              View details
+            </Link>
+          </Card.Body>
+        )}
       </Card>
     </Col>
   );
 }
+
+CatCard.defaultProps = {
+  mdWidth: 3,
+  smWidth: 6,
+  showCardBody: true,
+};
 
 export default CatCard;
