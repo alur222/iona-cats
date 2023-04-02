@@ -96,7 +96,7 @@ export function CatsProvider({ children }: Props) {
         const newData = data.filter(({ id }) => ids.indexOf(id) === -1);
         const merged = [...cats, ...newData];
         setCats(merged);
-        setHasMore(newData.length === 10);
+        setHasMore(!!newData.length);
         setLoading(false);
       })
       .catch(() => {
