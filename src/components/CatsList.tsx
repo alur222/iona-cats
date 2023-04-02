@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useContext } from 'react';
+import styled from 'styled-components';
 import CatsContext from '../context/Cats';
 import CatCard from './CatCard';
 
@@ -15,9 +16,9 @@ interface Cat {
   id: string;
 }
 
-// interface Data {
-//   cats: Cat[];
-// }
+const CardRow = styled(Row)`
+  row-gap: 15px;
+`;
 
 function CatsList() {
   const { cats, hasMore, loadMore } = useContext(CatsContext);
@@ -29,22 +30,22 @@ function CatsList() {
 
   if (!cats.length) {
     return (
-      <Row className="cats-list">
+      <CardRow>
         <Col xs={12} md={12}>
           <h3>Please select a breed.</h3>
         </Col>
-      </Row>
+      </CardRow>
     );
   }
 
   return (
     <>
-      <Row className="cats-list">
+      <CardRow>
         {cats.map(({ url, id }: Cat) => (
           <CatCard url={url} id={id} key={id} />
         ))}
-      </Row>
-      <Row>
+      </CardRow>
+      <CardRow>
         <Col xs={12} md={12} style={{ paddingTop: '20px' }}>
           {hasMore && (
             <Button variant="success" onClick={handleLoadMore}>
@@ -52,7 +53,7 @@ function CatsList() {
             </Button>
           )}
         </Col>
-      </Row>
+      </CardRow>
     </>
   );
 }
