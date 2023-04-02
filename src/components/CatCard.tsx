@@ -12,10 +12,12 @@ interface Props {
 
 function CatCard({ url, id, mdWidth, smWidth, showCardBody }: Props) {
   const href = `/cat/${id}`;
+  const time = new Date().valueOf();
+  const imageSrc = showCardBody ? url : `${url}?t=${time}`;
   return (
     <Col md={mdWidth} sm={smWidth} className="cat-card">
       <Card>
-        <Card.Img variant="top" src={url} />
+        <Card.Img variant="top" src={imageSrc} />
         {showCardBody && (
           <Card.Body>
             <Link to={href} className="btn btn-primary">
